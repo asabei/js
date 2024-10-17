@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+</head>
+<body>
+    <h1>Конвертер температуры</h1>
+    <script>
+        class BaseConverter {
+            constructor(celsius) {
+                this.celsius = celsius;
+            }
+
+            convert(toUnit) {
+                switch (toUnit) {
+                    case 'K':
+                        return this.toKelvin();
+                    case 'F':
+                        return this.toFahrenheit();
+                    default:
+                        throw new Error('Error');
+                }
+            }
+
+            toKelvin() {
+                return this.celsius + 273.15;
+            }
+
+            toFahrenheit() {
+                return (this.celsius * 9 / 5) + 32;
+            }
+        }
+
+        
+        function startConversion() {
+            const celsiusInput = prompt("Введите температуру в градусах Цельсия:");
+            const celsius = parseFloat(celsiusInput);
+
+            if (isNaN(celsius)) {
+                alert("Введите корректное числовое значение.");
+                return;
+            }
+
+            const unit = prompt("Выберите единицу для конвертации (K - Кельвины, F - Фаренгейты):").toUpperCase();
+
+            const converter = new BaseConverter(celsius);
+            try {
+                const result = converter.convert(unit);
+                alert(`Температура в ${unit === 'K' ? 'Кельвинах' : 'Фаренгейтах'}: ${result}`);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+       
+        startConversion();
+    </script>
+</body>
+</html>
